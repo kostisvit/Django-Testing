@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ first_form.as_p }}
+    
+    {{ second_form.as_p }}
+    
+    <button type="submit" class="btn btn-success">Αποθήκευση</button>
+</form>
+
+
+{% endblock %}

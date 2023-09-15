@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<ul>
+    {% for file in files %}
+        <li><a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></li>
+    {% empty %}
+        <li>No files have been uploaded.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
