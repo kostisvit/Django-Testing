@@ -9,32 +9,38 @@ from django.core.mail import EmailMessage
 
 from django.conf import settings
 from .forms import EmailForm
-from django.core.mail import EmailMultiAlternatives
+from django.http import HttpResponse
 
-
-def send_email_with_attachment(request):
+def compose_email(request):
     if request.method == 'POST':
         form = EmailForm(request.POST, request.FILES)
         if form.is_valid():
             email = form.cleaned_data['email']
-            email_bcc = form.cleaned_data['email_bcc']
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
+            bcc = [email.strip() for email in form.cleaned_data['bcc'].split(',') if email.strip()]
             
-            for email in email_bcc:
-            # Create an EmailMessage object
-                email = EmailMultiAlternatives(subject, message, settings.DEFAULT_FROM_EMAIL, [email],[email_bcc])
-
-            # Attach the file if provided
-            if 'attachments' in request.FILES:
-                attachments = request.FILES['attachments']
-                email.attach(attachments.name, attachments.read(), attachments.content_type)
-
+            # Create an EmailMessage object to handle attachments
+            email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,[email], bcc=bcc)
+            
+            # Attach files to the email
+            for attachment in request.FILES.getlist('attachments'):
+                email.attach(attachment.name, attachment.read(), attachment.content_type)
+            
+            try:
+            
             # Send the email
-            email.send()
-
-            return render(request, 'email_sent.html')
+                email.send()
+            # Handle success or error here
+                return render(request, 'email_sent.html')
+            except Exception as e:
+                return HttpResponse(f'Email could not be sent. Error: {str(e)}')
+            
     else:
-        form = EmailForm()
-
+        if request.user.is_authenticated:
+            user_email = request.user.email
+            form = EmailForm(initial={'email': user_email})
+        else:
+            form = EmailForm()
+    
     return render(request, 'email.html', {'form': form})

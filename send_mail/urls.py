@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import send_email_with_attachment
+from .views import compose_email
 from . import views
 urlpatterns = [
-    path('email/send/', views.send_email_with_attachment, name='emailattachment')
+    path('email/send/', views.compose_email, name='emailattachment')
 ]
