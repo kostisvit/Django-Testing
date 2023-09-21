@@ -40,4 +40,4 @@ class Update(TimeStampMixin):
     new_os = models.CharField(max_length=100)
     
     def __str__(self):
-        return str(self.cash)
+        return f"{self.cash} - {self.new_os}"
