@@ -35,7 +35,7 @@ class Cash(TimeStampMixin):
         return str(self.customer)
 
 
-class Update(models.Model):
+class Update(TimeStampMixin):
     cash = models.ForeignKey(Cash, on_delete=models.CASCADE)
     new_os = models.CharField(max_length=100)
     
