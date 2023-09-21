@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'send_mail',
     'crispy_forms',
     'crispy_bootstrap4',
+    'cash',
 ]
 
 MIDDLEWARE = [
