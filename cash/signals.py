@@ -7,8 +7,8 @@ from .models import *
 def update_model_update(sender, instance, **kwargs):
     # Check if ModelB related to this instance of ModelA exists
     try:
-        model_update_instance = Update.objects.get(new_os=instance)
-    except Update.DoesNotExist:
+        model_update_instance = CashUpdate.objects.get(new_os=instance)
+    except CashUpdate.DoesNotExist:
         model_update_instance = None
 
     # Create or update ModelB based on changes in ModelA
@@ -16,4 +16,4 @@ def update_model_update(sender, instance, **kwargs):
         model_update_instance.data = instance.new_os  # Update ModelB data field based on ModelA changes
         model_update_instance.save()
     else:
-        Update.objects.create(cash=instance, new_os=instance.new_os)
+        CashUpdate.objects.create(cash=instance, new_os=instance.new_os)

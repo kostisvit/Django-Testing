@@ -7,11 +7,12 @@ from crispy_forms.helper import FormHelper
 def file_size(value): # add this to some file where you can import it from
     limit = 10 * 1024 * 1024
     if value.size > limit:
-        raise ValidationError('File too large. Size should not exceed 2 MiB.')
+        raise ValidationError('Το αρχείο υπερβαίνει το όριο των 10MB.')
 
 class EmailForm(forms.Form):
     email = forms.EmailField(label='Προς')
-    bcc = forms.CharField(label='Κοινοποίηση', widget=forms.TextInput(attrs={'placeholder': 'Οι διευθύνσεις χωρίζονται με κόμμα'}),required=False)
+    cc = forms.CharField(label='Κοινοποίηση', widget=forms.TextInput(attrs={'placeholder': 'Οι διευθύνσεις χωρίζονται με κόμμα'}),required=False)
+    bcc = forms.CharField(label='Ιδιαίτ. Κοινοποίηση', widget=forms.TextInput(attrs={'placeholder': 'Οι διευθύνσεις χωρίζονται με κόμμα'}),required=False)
     subject = forms.CharField(label='Θέμα',max_length=100)
     attachments = forms.FileField(validators=[file_size],label="Επιλέξτε αρχείο",widget=forms.ClearableFileInput(attrs={"allow_multiple_selected": True}), required=False)
     message = forms.CharField(label='Μήνυμα',widget = forms.Textarea)
@@ -22,6 +23,7 @@ class EmailForm(forms.Form):
         self.helper.layout = Layout(
             Field('email', css_class='form-control'),
             Field('subject', css_class='form-control'),
+            Field('cc', css_class='form-control'),
             Field('bcc', css_class='form-control'),
             Field('attachments', css_class='form-control'),
             Field('message', css_class='form-control'),

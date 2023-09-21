@@ -1,15 +1,10 @@
-# views.py import what you have not imported before
-
-import email
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views import View
-
 from django.core.mail import EmailMessage
-
 from django.conf import settings
 from .forms import EmailForm
 from django.http import HttpResponse
+
+
 
 def compose_email(request):
     if request.method == 'POST':
@@ -19,9 +14,10 @@ def compose_email(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             bcc = [email.strip() for email in form.cleaned_data['bcc'].split(',') if email.strip()]
+            cc = [email.strip() for email in form.cleaned_data['cc'].split(',') if email.strip()]
             
             # Create an EmailMessage object to handle attachments
-            email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,[email], bcc=bcc)
+            email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,[email], bcc=bcc,cc=cc)
             
             # Attach files to the email
             for attachment in request.FILES.getlist('attachments'):
