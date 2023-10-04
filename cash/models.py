@@ -23,6 +23,8 @@ class Cash(TimeStampMixin):
     customer = models.CharField(max_length=150,null=False,blank=False)
     old_os = models.CharField(max_length=50,null=True,blank=True)
     new_os = models.CharField(max_length=50,null=True,blank=True)
+    date_field = models.DateField(null=True, blank=True)
+    checkbox_field = models.BooleanField(default=True)
 
 
     

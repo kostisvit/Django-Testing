@@ -17,3 +17,16 @@ def update_model_update(sender, instance, **kwargs):
         model_update_instance.save()
     else:
         CashUpdate.objects.create(cash=instance, new_os=instance.new_os)
+
+
+
+
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from datetime import date
+
+@receiver(pre_save, sender=Cash)
+def set_date_if_checkbox_unchecked(sender, instance, **kwargs):
+    if not instance.checkbox_field:
+        # Checkbox is unchecked, so set the date_field to the current date.
+        instance.date_field = date.today()
