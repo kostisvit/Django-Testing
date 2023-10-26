@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-49e=)5hd#=^uow)$lf3wppi=g8*qa6gqq0@(vb4j_mb+88o5ut
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000"]
 
 
 # Application definition
@@ -142,3 +144,8 @@ EMAIL_HOST_PASSWORD='Acs1234!'
 EMAIL_PORT=587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'noReply <administrator@acsservices.gr>'
+
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

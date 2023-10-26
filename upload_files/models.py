@@ -42,3 +42,19 @@ class UploadedFile(models.Model):
     customer = models.ForeignKey(Cash,on_delete=models.CASCADE)
     file = models.FileField(upload_to=client_directory_path,validators=[validate_file_extension],blank=True,null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
+class Customer(models.Model):
+    name = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return str(self.name)
+
+
+class MasterFile(models.Model):
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    master_file = models.FileField(upload_to='master_files/')
+
+class SubFile(models.Model):
+    master_file = models.ForeignKey(MasterFile, on_delete=models.CASCADE)
+    sub_file = models.FileField(upload_to='sub_files/')

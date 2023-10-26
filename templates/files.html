@@ -2,11 +2,33 @@
 
 
 {% block content %}
-<ul>
-    {% for file in files %}
-        <li><a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></li>
-    {% empty %}
-        <li>No files have been uploaded.</li>
-    {% endfor %}
-</ul>
+<!-- your_template.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your ListView</title>
+</head>
+<body>
+    <h1>Master_File:</h1>
+    <ul>
+        {% for item in model1_data %}
+        {% if forloop.first %}
+        <li>{{ item.customer }}</li>
+        {% endif %}
+            <li>{{ item.master_file }}</li>
+            <!-- Display other fields from Model1 as needed -->
+        {% endfor %}
+    </ul>
+
+    <h5>Sub_File:</h5>
+    <ul>
+        {% for item in model2_data %}
+            <li style="margin-left:100px;">{{ item.sub_file }}</li>
+            <!-- Display other fields from Model2 as needed -->
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
 {% endblock %}
