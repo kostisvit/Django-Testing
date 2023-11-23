@@ -55,7 +55,9 @@ def upload_success(request):
 
 from django.shortcuts import render
 from .models import MasterFile, SubFile
+from django.contrib.auth.decorators import permission_required
 
+@permission_required('upload_files.can_view_uploadedfile')
 def custom_listview(request):
     model1_data = MasterFile.objects.all()
     model2_data = SubFile.objects.all()
