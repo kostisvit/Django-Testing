@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.edit import CreateView
@@ -57,7 +58,7 @@ from django.shortcuts import render
 from .models import MasterFile, SubFile
 from django.contrib.auth.decorators import permission_required
 
-@permission_required('upload_files.can_view_uploadedfile')
+@permission_required('upload_files.can_view_uploadedfile',login_url='/error/')
 def custom_listview(request):
     model1_data = MasterFile.objects.all()
     model2_data = SubFile.objects.all()
@@ -68,3 +69,11 @@ def custom_listview(request):
     }
 
     return render(request, 'files.html', context)
+
+
+
+
+def special_content_view(request):
+    # This view requires the 'can_view_special_content' permission
+    # permission_required decorator checks if the user has the specified permission
+    return HttpResponse("You have not permission to view special content.")

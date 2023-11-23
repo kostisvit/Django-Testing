@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000"]
 
+LOGIN_REDIRECT_URL = 'home'
 
 # Application definition
 
